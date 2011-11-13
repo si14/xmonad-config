@@ -73,12 +73,12 @@ promptConfig = defaultXPConfig {
 myWorkspaces = ["jabber", "skype", "web", "dev1", "dev2", "music", "other"]
 
 myManageHook = manageDocks
-             <+> composeAll [
-               className =? "Unity-2d-panel" --> doIgnore
-             , isFullscreen                  --> doFullFloat
-             , className =? "Skype"          --> (doF $ W.shift "skype")
-             , className =? "Gajim.py"         --> (doF $ W.shift "jabber")
-             ] <+> manageHook baseConfig
+               <+> composeAll [
+                 className =? "Unity-2d-panel" --> doIgnore
+                 , isFullscreen                  --> doFullFloat
+                 , className =? "Skype"          --> (doF $ W.shift "skype")
+                 , className =? "Gajim.py"         --> (doF $ W.shift "jabber")
+                 ] <+> manageHook baseConfig
 
 myDWConfig = (theme smallClean) { fontName   = "xft:Ubuntu:size=8",
                                   decoHeight = 16 }
@@ -86,19 +86,19 @@ myDWConfig = (theme smallClean) { fontName   = "xft:Ubuntu:size=8",
 myLayoutHook = gaps [(U, 24)]
                $ showWName' defaultSWNConfig { swn_font = "xft:Ubuntu:size=20" }
                $ onWorkspace "jabber" (reflectHoriz (withIM (1%7) (Role "roster") Grid))
-               $ onWorkspace "skype" (reflectHoriz tiled)
+               $ onWorkspace "skype" Grid
                $ dwmStyle shrinkText myDWConfig
                $ layouts
                where
-                 layouts = tiled 
-                           ||| (reflectHoriz tiled) 
-                           ||| Mirror tiled 
-                           ||| Grid 
+                 layouts = tiled
+                           ||| (reflectHoriz tiled)
+                           ||| Mirror tiled
+                           ||| Grid
                            ||| tabbed shrinkText myDWConfig
                            ||| Full
 
 tiled = ResizableTall 1 (2/100) (1/2) []
-myLogHook = fadeInactiveLogHook 0.7 >> logHook baseConfig
+myLogHook = fadeInactiveLogHook 0.65 >> logHook baseConfig
 
 myGSConfig = defaultGSConfig { gs_cellwidth = 250,
                                gs_cellheight = 50,
@@ -131,7 +131,8 @@ myKeys = [("C-M1-<Right>",   nextWS),
          myApps
 
 myApps = appShortcuts[("b", "google-chrome", "Google-chrome"),
-                      ("f", "nautilus", "Nautilus")]
+                      ("f", "nautilus", "Nautilus"),
+                      ("e", "emacs-snapshot", "Emacs")]
 
 --utility functions
 
@@ -140,4 +141,3 @@ appShortcuts = concat . map appShortcut
 appShortcut (key, app, name) =
     [("M-M1-"   ++ key, runOrRaise app (className =? name)),
      ("M-S-M1-" ++ key, spawn app)]
-
