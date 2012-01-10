@@ -1,5 +1,7 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses, TypeSynonymInstances, FlexibleContexts, NoMonomorphismRestriction #-}
 
+--TOADD: mouseResizableTile
+
 import qualified Data.Map as Map
 import qualified Data.Tuple as Tuple
 import Data.Ratio ((%))
@@ -15,6 +17,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.SetWMName
 
 import XMonad.Actions.CycleWindows
 import XMonad.Actions.CycleWS
@@ -61,7 +64,8 @@ main = do
                               layoutHook = myLayoutHook,
                               logHook    = myLogHook,
                               manageHook = myManageHook,
-                              workspaces = myWorkspaces
+                              workspaces = myWorkspaces,
+                              startupHook = setWMName "LG3D"
                             }
                   `additionalKeysP` myKeys
 
