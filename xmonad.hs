@@ -74,7 +74,7 @@ promptConfig = defaultXPConfig {
 	position = Bottom
 }
 
-myWorkspaces = ["jabber", "skype", "web", "dev1", "dev2", "music", "other"]
+myWorkspaces = ["jabber", "skype", "web", "dev1", "dev2", "dev3", "music", "other"]
 
 myManageHook = manageDocks
                <+> composeAll [
@@ -89,7 +89,9 @@ myDWConfig = (theme smallClean) { fontName   = "xft:Ubuntu:size=8",
 
 myLayoutHook = gaps [(U, 24)]
                $ showWName' defaultSWNConfig { swn_font = "xft:Ubuntu:size=20" }
-               $ onWorkspace "jabber" (reflectHoriz (withIM (1%7) (Role "roster") Grid))
+               $ onWorkspace "jabber" (reflectHoriz
+                                       (withIM (1%7)
+                                        (Role "roster") (Mirror Grid)))
                $ onWorkspace "skype" Grid
                $ dwmStyle shrinkText myDWConfig
                $ layouts
